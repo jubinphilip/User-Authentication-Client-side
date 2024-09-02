@@ -1,0 +1,74 @@
+/* globals.css */
+
+.container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background: linear-gradient(to bottom, #f0f0f0, #d9d9d9); 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+}
+.imageContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.head {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.otpbox {
+  width: 60%;
+  padding: 8px;
+  margin-top: 10px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+}
+
+.otpbtn {
+  padding: 8px 12px;
+  margin-left: 10px;
+  background-color: #4CAF50; /* Green background */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.otpbtn:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+button[type="submit"],
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background-color: #007BFF; /* Blue background */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover,
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}

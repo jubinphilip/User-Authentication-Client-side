@@ -1,95 +1,101 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-
-export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+'use client'
+import React, { useState,useEffect } from 'react'
+import { useForm } from '@/context/Formcontext'
+import { useRouter } from 'next/navigation'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import './globals.css'
+type UserRecord = {
+  username: string;
+  email: string;
+  phone: string;
+  adhar: string;
+  dob: string;
 }
+function Page() {
+  const{formData,updateFormData}=useForm();
+  const[otp,setOtp]=useState({})
+  const[record,setRecord]=useState<UserRecord>({} as UserRecord)
+  const[show,setShow]=useState(false)
+  const[mobValidate,setmobileValidate]=useState(false)
+  const[emailValidate,setEmailvalidate]=useState(false)
+  const router=useRouter();
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>)
+  {
+      setRecord((prev)=>({...prev,[e.target.name]:e.target.value}))
+      console.log(record)
+  }
+  const handleSubmit: React.FormEventHandler<HTMLButtonElement> = (e) => 
+  {
+      e.preventDefault()
+       const url="http://localhost:9000/user/register"
+      axios.post(url,record).then((res)=>
+          {
+            toast.success(res.data.message)
+            console.log(res.data.message)
+          }) 
+  
+     console.log(record)
+     setShow(!show)
+  }
+  const handleNext=()=>
+  {
+    updateFormData(record);
+    router.push('/adhar');
+  }
+  function handleotpChange(e: React.ChangeEvent<HTMLInputElement>)
+  {
+    setOtp((prev)=>({...prev,[e.target.name]:e.target.value}))
+  }
+  const handleEmailotp: React.FormEventHandler<HTMLButtonElement> = (e) => 
+  {
+    e.preventDefault()
+    const url="http://localhost:9000/user/otpemail"
+    const verifymail=record.email;
+    console.log(verifymail,otp)
+    axios.post(url,{verifymail,otp}).then((res)=>
+        {
+          toast.success(res.data.message)
+        setEmailvalidate(res.data.status)
+        }) 
+
+   console.log(otp)
+  }
+  const handleOtpsubmit: React.FormEventHandler<HTMLButtonElement> = (e) => 
+  {
+    e.preventDefault()
+    const url="http://localhost:9000/user/otpverify"
+    axios.post(url,otp).then((res)=>
+        {
+          toast.success(res.data.message)
+          setmobileValidate(res.data.status)
+        }) 
+
+   console.log(otp)
+  }
+  return (
+    <div className='container'>
+       <ToastContainer/>
+        <form >
+        <h1 className='head'>Register Here </h1>
+        
+        <input type="text" name="name" placeholder='Enter  Name' onChange={handleChange} />
+        <br/>
+        <input placeholder='Enter Your Email' type="email" name="email" onChange={handleChange}/>{show &&<div><input placeholder='enter OTP ' className='otpbox' name='otp' onChange={handleotpChange}/><button className='otpbtn' onClick={handleEmailotp}>Submit Otp</button></div>}
+        <br/>
+        <input placeholder='Enter Conatct Number' type="text" name="phone" onChange={handleChange}/>{show &&<div><input placeholder='enter OTP ' className='otpbox' name='otp' onChange={handleotpChange}/><button className='otpbtn'  onClick={handleOtpsubmit}>Submit Otp</button></div>}
+
+        <br/>
+        <input type="date" name="dob" onChange={handleChange}/>
+        <br/>
+        <button type='submit' onClick={handleSubmit}>Submit Data</button><br/>
+        
+      </form>
+      {mobValidate && emailValidate && <button onClick={handleNext}>Next</button>}
+    </div>
+  )
+}
+ 
+export default Page
