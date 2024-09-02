@@ -6,6 +6,8 @@ import axios from 'axios';
 import Image from 'next/image';
 import '../page.css'
 import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function Gstverify() {
   const { formData, updateFormData } = useForm();
   const [gstno, setgstno] = useState(formData.gstno || '');
@@ -41,7 +43,7 @@ function Gstverify() {
     }
   return (
     <div  className='container'>   
-    <ToastContainer/>
+    <ToastContainer position="top-right"/>
       <h1> GST Verification</h1>
       <div className="imageContainer"><Image src="/assets/gst.jpeg" height={150} alt='Adhar Unique Identity' width={150}/></div>
       <form onSubmit={handleSubmit}>

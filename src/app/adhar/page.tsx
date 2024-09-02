@@ -4,6 +4,7 @@ import { useForm } from '@/context/Formcontext';
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import '../page.css'
 function AdharPage() {

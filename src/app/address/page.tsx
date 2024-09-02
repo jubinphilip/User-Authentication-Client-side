@@ -5,6 +5,8 @@ import axios from 'axios';
 import Image from 'next/image';
 import '../page.css'
 import { useForm } from '../../context/Formcontext'; // Make sure this path is correct
+import 'react-toastify/dist/ReactToastify.css';
+
 
 interface AddressData {
  area: string;

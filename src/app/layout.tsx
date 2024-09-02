@@ -1,5 +1,7 @@
 import { FormProvider } from "@/context/Formcontext";
 import type { Metadata } from "next";
+import Navbar from "./Navbar/navbar";
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,6 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body >
+        <Navbar/>
         <FormProvider>
         {children}
         </FormProvider>

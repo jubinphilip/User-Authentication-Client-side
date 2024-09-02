@@ -2,6 +2,10 @@
 import React, { useState,useEffect } from 'react';
 import { useForm } from '@/context/Formcontext';
 import { useRouter } from 'next/navigation';
+import { ToastContainer,toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+
+
 import '../page.css'
 import axios from 'axios';
 function SummaryPage() {
@@ -17,7 +21,7 @@ function SummaryPage() {
          const url="http://localhost:9000/user/submit"
         axios.post(url,data).then((res)=>
             {
-              console.log(res.data)
+              toast.success(res.data.message)
               if(res.data.status==1)
               {
                 localStorage.removeItem('formData');//After submittting data to db clearing the localstorage
@@ -26,6 +30,7 @@ function SummaryPage() {
     }
   return (
     <div  className='container'>
+      <ToastContainer/>
       <h1>Summary</h1>
       <div>
         <h2>Personal Information</h2>

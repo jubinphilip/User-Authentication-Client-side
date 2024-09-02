@@ -5,6 +5,8 @@ import { useForm } from '@/context/Formcontext'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { ToastContainer,toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+
 import '../page.css'
 function Pancard() {
   const {formData,updateFormData}=useForm();
