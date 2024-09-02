@@ -25,9 +25,10 @@ function Gstverify() {
         {
        
          console.log(res.data)
-         if(res.data==true)
+         if(res.data==true)//if the value of data is true then gst is verified
          {
           toast.success("Gst Verified")
+          updateFormData({ gstno });
           setShow(!show)
          }
          else
@@ -38,7 +39,6 @@ function Gstverify() {
   };
   const handleNext=()=>
     {
-      updateFormData({ gstno });
       router.push('/address');
     }
   return (

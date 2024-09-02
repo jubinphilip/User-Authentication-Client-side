@@ -29,6 +29,7 @@ function AdharPage() {
         if(data==true)
         {
           toast.success("Adhar Verified")
+          updateFormData({ adhar });
           setShow(!show)
         }
         else
@@ -37,9 +38,6 @@ function AdharPage() {
         }
          
         })
-    updateFormData({ adhar });
- 
- 
   };
   const handleNext=()=>
     {

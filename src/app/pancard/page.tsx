@@ -23,7 +23,7 @@ function Pancard() {
     const url="http://localhost:9000/user/panverify"
     axios.post(url,{panno}).then((res)=>
         {
-         if(res.data.status==1)
+         if(res.data.status==1)//if the status is 1 then pannumber is verified
          {
           toast(res.data.message)
           setShow(!show)
