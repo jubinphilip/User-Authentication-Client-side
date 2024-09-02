@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import Image from 'next/image';
 import '../page.css'
+import { ToastContainer,toast } from 'react-toastify';
 import { useForm } from '../../context/Formcontext'; // Make sure this path is correct
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -35,7 +36,7 @@ function Address() {
       console.log(res.data)
       setShow(!show)
       if (res.data.length > 0) {
-        setSelectedAddress(res.data[0]);
+        setSelectedAddress(res.data[0]);//initially making the first value as the address
         console.log(res.data[0])
       }
     } catch (error) {
@@ -43,7 +44,7 @@ function Address() {
       alert('Failed to fetch address data');
     }
   };
-
+//Handling Selection of address from the user
   const handleAddressSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selected = addresses.find(addr => addr.area === e.target.value);
     if (selected) {
@@ -53,10 +54,10 @@ function Address() {
 
   const handleSaveAddress = () => {
     if (!selectedAddress) {
-      alert('Please select an address first');
+      toast.error('Please select an address first');
       return;
     }
-
+//Updating data to the context
     updateFormData({
       address: {
         pincode: pincode,
@@ -93,14 +94,14 @@ function Address() {
         <div>
           <label>Place:</label>
           <select name="place" onChange={handleAddressSelect} value={selectedAddress?.area || ''}>
-            <option value="">Select an address</option>
+            <option value="">Select an address</option>{/*MApping through the areas related to the pinocde*/}
             {addresses.map((addr, index) => (
               <option key={index} value={addr.area}>{addr.area}</option>
             ))}
           </select>
         </div>
       )}
-
+{/* Showing the details according to the selected Area*/}
       {selectedAddress && (
         <div>
           <h2>Selected Address Details:</h2>
